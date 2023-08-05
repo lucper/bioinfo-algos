@@ -60,3 +60,18 @@ std::forward_list<std::string> betterFrequentWords(const std::string& text, int 
             mostFrequents.push_front(key);
     return mostFrequents;
 }
+
+std::string reverseComplement(const std::string& pattern) {
+    int n = pattern.length();
+    std::string revComp;
+    for (int i = n - 1; i >= 0; --i)
+        if (pattern[i] == 'A')
+            revComp += 'T';
+        else if (pattern[i] == 'T')
+            revComp += 'A';
+        else if (pattern[i] == 'C')
+            revComp += 'G';
+        else if (pattern[i] == 'G')
+            revComp += 'C';
+    return revComp;
+}
