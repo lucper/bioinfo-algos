@@ -58,6 +58,7 @@ std::forward_list<std::string> betterFrequentWords(const std::string& text, int 
     for (auto& [key, val] : freqMap)
         if (val == max)
             mostFrequents.push_front(key);
+    mostFrequents.reverse();
     return mostFrequents;
 }
 
