@@ -51,6 +51,12 @@ int maxMap(std::map<std::string, int> freqMap) {
     return max;
 }
 
-std::vector<std::string> betterFrequentWords(const std::string& text, k) {
-    ;
+std::forward_list<std::string> betterFrequentWords(const std::string& text, int k) {
+    std::map<std::string, int> freqMap = frequencyTable(text, k);
+    int max = maxMap(freqMap);
+    std::forward_list<std::string> mostFrequents;
+    for (auto& [key, val] : freqMap)
+        if (val == max)
+            mostFrequents.push_front(key);
+    return mostFrequents;
 }
