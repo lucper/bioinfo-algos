@@ -75,3 +75,17 @@ std::string reverseComplement(const std::string& pattern) {
             revComp += 'C';
     return revComp;
 }
+
+std::forward_list<int> patternMatch(const std::string& pattern, const std::string& genome) {
+    int count = 0, n = genome.length(), m = pattern.length();
+    std::forward_list<int> positions;
+    for (int i = 0; i < n - m + 1; ++i) {
+        int j = m - 1;
+        while (j >= 0 && genome[i + j] == pattern[j])
+            j--;
+        if (j < 0)
+            positions.push_front(i);
+    }
+    positions.reverse();
+    return positions;
+}

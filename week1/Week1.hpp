@@ -9,3 +9,4 @@ std::map<std::string, int> frequencyTable(const std::string& text, int k);
 int maxMap(std::map<std::string, int> freqMap);
 std::forward_list<std::string> betterFrequentWords(const std::string& text, int k);
 std::string reverseComplement(const std::string& pattern);
+std::forward_list<int> patternMatch(const std::string& pattern, const std::string& genome);
