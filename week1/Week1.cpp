@@ -90,3 +90,15 @@ std::forward_list<int> patternMatch(const std::string& pattern, const std::strin
     positions.reverse();
     return positions;
 }
+
+std::set<std::string> findClumps(const std::string& genome, int k, int L, int t) {
+    std::set<std::string> patterns;
+    for (int i = 0; i < genome.length() - L + 1; ++i) {
+        std::string window = genome.substr(i, L);
+        std::map<std::string, int> freqMap = frequencyTable(window, k);
+        for (auto& [key, val] : freqMap)
+            if (val >= t)
+                patterns.insert(key);
+    }
+    return patterns;
+}
