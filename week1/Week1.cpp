@@ -29,8 +29,8 @@ std::unordered_set<std::string> frequentWords(const std::string& text, int k) {
     return freqPatterns;
 }
 
-std::map<std::string, int> frequencyTable(const std::string& text, int k) {
-    std::map<std::string, int> freqMap;
+std::unordered_map<std::string, int> frequencyTable(const std::string& text, int k) {
+    std::unordered_map<std::string, int> freqMap;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
         if (freqMap.find(pattern) == freqMap.end())
@@ -41,7 +41,7 @@ std::map<std::string, int> frequencyTable(const std::string& text, int k) {
     return freqMap;
 }
 
-int maxMap(std::map<std::string, int> freqMap) {
+int maxMap(std::unordered_map<std::string, int> freqMap) {
     if (freqMap.empty())
         throw std::invalid_argument("freqMap is empty");
     int max = freqMap.begin()->second;
@@ -52,7 +52,7 @@ int maxMap(std::map<std::string, int> freqMap) {
 }
 
 std::forward_list<std::string> betterFrequentWords(const std::string& text, int k) {
-    std::map<std::string, int> freqMap = frequencyTable(text, k);
+    std::unordered_map<std::string, int> freqMap = frequencyTable(text, k);
     int max = maxMap(freqMap);
     std::forward_list<std::string> mostFrequents;
     for (auto& [key, val] : freqMap)
@@ -97,7 +97,7 @@ std::set<std::string> findClumps(const std::string& genome, int k, int L, int t)
         // dont compute the overlapping region again!
         // add or update genome.substr(i + L - k, k)
         std::string window = genome.substr(i, L);
-        std::map<std::string, int> freqMap = frequencyTable(window, k);
+        std::unordered_map<std::string, int> freqMap = frequencyTable(window, k);
         for (auto& [key, val] : freqMap)
             if (val >= t)
                 patterns.insert(key);
