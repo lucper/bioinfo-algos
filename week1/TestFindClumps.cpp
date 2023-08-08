@@ -18,4 +18,6 @@ int main() {
     for (auto& s : patterns)
         std::cout << s << " ";
     std::cout << std::endl;
+
+    std::cout << patterns.size() << std::endl;
 }
