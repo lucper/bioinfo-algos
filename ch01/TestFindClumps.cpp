@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Week1.hpp"
+#include "ch01_algos.hpp"
 
 int main() {
     std::string genome;
