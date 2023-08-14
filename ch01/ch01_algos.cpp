@@ -1,4 +1,4 @@
-#include "Week1.hpp"
+#include "ch01_algos.hpp"
 #include <stdexcept>
 
 /* Could use Boyer-Moore so that time complexity goes from
