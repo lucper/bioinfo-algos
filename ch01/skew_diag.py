@@ -11,10 +11,16 @@ def skew(genome):
             diag[i+1] = diag[i]
     return diag
 
+def mins(genome):
+    skew_diag = skew(genome)
+    minimum = min(skew_diag)
+    return [i for i, val in enumerate(skew_diag) if val == minimum]
+
 if __name__ == '__main__':
     import fileinput
 
     with fileinput.input() as fin:
         genome = fin.readline().strip()
 
-    print(' '.join([str(i) for i in skew(genome)]))
+    #print(' '.join([str(i) for i in skew(genome)]))
+    print(' '.join([str(i) for i in mins(genome)]))
