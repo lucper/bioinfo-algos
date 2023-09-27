@@ -104,3 +104,21 @@ std::set<std::string> findClumps(const std::string& genome, int k, int L, int t)
     }
     return patterns;
 }
+
+int hammingDist(const std::string& s1, const std::string& s2) {
+    int dist = 0;
+    for (int i = 0; i < s1.length(); ++i)
+        if (s1[i] != s2[i])
+            dist++;
+    return dist;
+}
+
+std::forward_list<int> approxPatternMatch(const std::string& pattern, const std::string& text, int d) {
+    int count = 0, n = text.length(), m = pattern.length();
+    std::forward_list<int> positions;
+    for (int i = 0; i < n - m + 1; ++i)
+        if (hammingDist(pattern, text.substr(i, m)) <= d)
+            positions.push_front(i);
+    positions.reverse();
+    return positions;
+}
