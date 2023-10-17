@@ -11,8 +11,8 @@ int main() {
     int d;
     std::cin >> d;
 
-    std::forward_list<int> occurs = approxPatternMatch(pattern, text, d);
-    for (int i : occurs)
-        std::cout << i << " ";
+    auto [count, occurs] = approxPatternMatch(pattern, text, d);
+    for (int i : occurs) std::cout << i << " ";
     std::cout << std::endl;
+    std::cout << count << std::endl;
 }

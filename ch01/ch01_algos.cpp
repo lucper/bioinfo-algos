@@ -113,12 +113,12 @@ int hammingDist(const std::string& s1, const std::string& s2) {
     return dist;
 }
 
-std::forward_list<int> approxPatternMatch(const std::string& pattern, const std::string& text, int d) {
+std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pattern, const std::string& text, int d) {
     int count = 0, n = text.length(), m = pattern.length();
     std::forward_list<int> positions;
     for (int i = 0; i < n - m + 1; ++i)
         if (hammingDist(pattern, text.substr(i, m)) <= d)
-            positions.push_front(i);
+            ++count, positions.push_front(i);
     positions.reverse();
-    return positions;
+    return std::make_pair(count, positions);
 }

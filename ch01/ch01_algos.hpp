@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <forward_list>
 #include <set>
+#include <utility>
 
 int patternCount(const std::string& text, const std::string& pattern);
 std::unordered_set<std::string> frequentWords(const std::string& text, int k);
@@ -13,4 +14,4 @@ std::string reverseComplement(const std::string& pattern);
 std::forward_list<int> patternMatch(const std::string& pattern, const std::string& genome);
 std::set<std::string> findClumps(const std::string& genome, int k, int L, int t);
 int hammingDist(const std::string& s1, const std::string& s2);
-std::forward_list<int> approxPatternMatch(const std::string& pattern, const std::string& text, int d);
+std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pattern, const std::string& text, int d);
