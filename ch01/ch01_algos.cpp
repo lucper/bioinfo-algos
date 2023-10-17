@@ -122,3 +122,17 @@ std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pat
     positions.reverse();
     return std::make_pair(count, positions);
 }
+
+std::set<std::string> dNeighbors(const std::string& pattern, int d) {
+    std::set<std::string> neighbors{pattern};    
+    std::vector<char> alphabet{'A', 'C', 'G', 'T'};
+    for (int i = 0; i < pattern.length(); ++i) {
+        std::string neighbor = pattern;
+        for (auto x : alphabet)
+            if (x != pattern[i]) {
+                neighbor[i] = x;
+                neighbors.insert(neighbor);
+            }
+    }
+    return neighbors;
+}
