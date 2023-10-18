@@ -142,3 +142,22 @@ std::set<std::string> dNeighbors(const std::string& pattern, int d) {
     }
     return neighbors;
 }
+
+std::forward_list<std::string> frequentWordsWithMismatches(const std::string& text, int k, int d) {
+    std::unordered_map<std::string, int> freqMap;
+    std::forward_list<std::string> patterns;
+    for (int i = 0; i < text.length() - k + 1; ++i) {
+        std::string pattern = text.substr(i, k);
+        std::set<std::string> neighbors = dNeighbors(pattern, d);
+        for (auto& neighbor : neighbors)
+            if (freqMap.find(neighbor) == freqMap.end())
+                freqMap[neighbor] = 1;
+            else
+                freqMap[neighbor]++;
+    }
+    int max = maxMap(freqMap);
+    for (auto& [key, val] : freqMap)
+        if (val == max)
+            patterns.push_front(key);
+    return patterns;
+}
