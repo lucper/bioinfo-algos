@@ -160,3 +160,18 @@ std::forward_list<std::string> frequentWordsWithMismatches(const std::string& te
             patterns.push_front(key);
     return patterns;
 }
+
+std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::string& text, int k, int d) {
+    std::unordered_map<std::string, int> freqMap;
+    std::forward_list<std::string> patterns;
+    for (int i = 0; i < text.length() - k + 1; ++i) {
+        std::string pattern = text.substr(i, k);
+        if (freqMap.find(pattern) == freqMap.end())
+            freqMap[pattern] = approxPatternMatch(pattern, text, d).first + approxPatternMatch(reverseComplement(pattern), text, d).first;
+    }
+    int max = maxMap(freqMap);
+    for (auto& [key, val] : freqMap)
+        if (val == max)
+            patterns.push_front(key);
+    return patterns;
+}

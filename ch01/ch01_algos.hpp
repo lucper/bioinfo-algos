@@ -18,3 +18,4 @@ int hammingDist(const std::string& s1, const std::string& s2);
 std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pattern, const std::string& text, int d);
 std::set<std::string> dNeighbors(const std::string& pattern, int d);
 std::forward_list<std::string> frequentWordsWithMismatches(const std::string& text, int k, int d);
+std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::string& text, int k, int d);
