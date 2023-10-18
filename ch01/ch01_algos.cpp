@@ -133,13 +133,12 @@ std::set<std::string> dNeighbors(const std::string& pattern, int d) {
         return alphabet;
     std::string suffixPat = pattern.substr(1, pattern.length() - 1);
     std::set<std::string> suffixNeighbors = dNeighbors(suffixPat, d);
-    for (auto& kmer : suffixNeighbors) {
+    for (auto& kmer : suffixNeighbors)
         if (hammingDist(kmer, suffixPat) < d)
             for (auto& x : alphabet)
                 neighbors.insert(x + kmer);
         else
             neighbors.insert(pattern[0] + kmer);
-    }
     return neighbors;
 }
 
