@@ -124,7 +124,7 @@ std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pat
 }
 
 std::unordered_set<std::string> dNeighbors(const std::string& pattern, int d) {
-    std::set<std::string> neighbors{}, alphabet{"A", "C", "G", "T"};
+    std::unordered_set<std::string> neighbors{}, alphabet{"A", "C", "G", "T"};
     if (d == 0) {
         neighbors.insert(pattern);
         return neighbors;
@@ -132,7 +132,7 @@ std::unordered_set<std::string> dNeighbors(const std::string& pattern, int d) {
     if (pattern.length() == 1)
         return alphabet;
     std::string suffixPat = pattern.substr(1, pattern.length() - 1);
-    std::set<std::string> suffixNeighbors = dNeighbors(suffixPat, d);
+    std::unordered_set<std::string> suffixNeighbors = dNeighbors(suffixPat, d);
     for (auto& kmer : suffixNeighbors)
         if (hammingDist(kmer, suffixPat) < d)
             for (auto& x : alphabet)
@@ -147,7 +147,7 @@ std::forward_list<std::string> frequentWordsWithMismatches(const std::string& te
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
-        std::set<std::string> neighbors = dNeighbors(pattern, d);
+        std::unordered_set<std::string> neighbors = dNeighbors(pattern, d);
         for (auto& neighbor : neighbors)
             if (freqMap.find(neighbor) == freqMap.end())
                 freqMap[neighbor] = 1;
@@ -166,7 +166,7 @@ std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::strin
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k), rc_pattern = reverseComplement(pattern);
-        std::set<std::string> neighbors = dNeighbors(pattern, d), rc_neighbors = dNeighbors(rc_pattern, d);
+        std::unordered_set<std::string> neighbors = dNeighbors(pattern, d), rc_neighbors = dNeighbors(rc_pattern, d);
         for (auto& neighbor : neighbors)
             if (freqMap.find(neighbor) == freqMap.end())
                 freqMap[neighbor] = 1;
