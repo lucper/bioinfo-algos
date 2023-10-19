@@ -33,10 +33,7 @@ std::unordered_map<std::string, int> frequencyTable(const std::string& text, int
     std::unordered_map<std::string, int> freqMap;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
-        if (freqMap.find(pattern) == freqMap.end())
-            freqMap[pattern] = 1;
-        else
-            freqMap[pattern]++;
+        freqMap[pattern]++;
     }
     return freqMap;
 }
@@ -148,11 +145,7 @@ std::forward_list<std::string> frequentWordsWithMismatches(const std::string& te
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
         std::unordered_set<std::string> neighbors = dNeighbors(pattern, d);
-        for (auto& neighbor : neighbors)
-            if (freqMap.find(neighbor) == freqMap.end())
-                freqMap[neighbor] = 1;
-            else
-                freqMap[neighbor]++;
+        for (auto& neighbor : neighbors) freqMap[neighbor]++;
     }
     int max = maxMap(freqMap);
     for (auto& [key, val] : freqMap)
@@ -167,16 +160,8 @@ std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::strin
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k), rc_pattern = reverseComplement(pattern);
         std::unordered_set<std::string> neighbors = dNeighbors(pattern, d), rc_neighbors = dNeighbors(rc_pattern, d);
-        for (auto& neighbor : neighbors)
-            if (freqMap.find(neighbor) == freqMap.end())
-                freqMap[neighbor] = 1;
-            else
-                freqMap[neighbor]++;
-        for (auto& rc_neighbor : rc_neighbors)
-            if (freqMap.find(rc_neighbor) == freqMap.end())
-                freqMap[rc_neighbor] = 1;
-            else
-                freqMap[rc_neighbor]++;
+        for (auto& neighbor : neighbors) freqMap[neighbor]++;
+        for (auto& rc_neighbor : rc_neighbors) freqMap[rc_neighbor]++;
     }
     int max = maxMap(freqMap);
     for (auto& [key, val] : freqMap)
