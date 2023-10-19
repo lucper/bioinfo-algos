@@ -123,7 +123,7 @@ std::pair<int, std::forward_list<int>> approxPatternMatch(const std::string& pat
     return std::make_pair(count, positions);
 }
 
-std::set<std::string> dNeighbors(const std::string& pattern, int d) {
+std::unordered_set<std::string> dNeighbors(const std::string& pattern, int d) {
     std::set<std::string> neighbors{}, alphabet{"A", "C", "G", "T"};
     if (d == 0) {
         neighbors.insert(pattern);
@@ -165,15 +165,13 @@ std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::strin
     std::unordered_map<std::string, int> freqMap;
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
-        std::string pattern = text.substr(i, k);
-        std::set<std::string> neighbors = dNeighbors(pattern, d);
+        std::string pattern = text.substr(i, k), rc_pattern = reverseComplement(pattern);
+        std::set<std::string> neighbors = dNeighbors(pattern, d), rc_neighbors = dNeighbors(rc_pattern, d);
         for (auto& neighbor : neighbors)
             if (freqMap.find(neighbor) == freqMap.end())
                 freqMap[neighbor] = 1;
             else
                 freqMap[neighbor]++;
-        std::string rc_pattern = reverseComplement(pattern);
-        std::set<std::string> rc_neighbors = dNeighbors(rc_pattern, d);
         for (auto& rc_neighbor : rc_neighbors)
             if (freqMap.find(rc_neighbor) == freqMap.end())
                 freqMap[rc_neighbor] = 1;
