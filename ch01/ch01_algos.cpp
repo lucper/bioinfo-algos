@@ -38,7 +38,7 @@ std::unordered_map<std::string, int> frequencyTable(const std::string& text, int
     return freqMap;
 }
 
-int maxMap(std::unordered_map<std::string, int> freqMap) {
+int maxMap(const std::unordered_map<std::string, int>& freqMap) {
     if (freqMap.empty())
         throw std::invalid_argument("freqMap is empty");
     int max = freqMap.begin()->second;
