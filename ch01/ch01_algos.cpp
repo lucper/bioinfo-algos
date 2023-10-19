@@ -166,8 +166,19 @@ std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::strin
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
-        if (freqMap.find(pattern) == freqMap.end())
-            freqMap[pattern] = approxPatternMatch(pattern, text, d).first + approxPatternMatch(reverseComplement(pattern), text, d).first;
+        std::set<std::string> neighbors = dNeighbors(pattern, d);
+        for (auto& neighbor : neighbors)
+            if (freqMap.find(neighbor) == freqMap.end())
+                freqMap[neighbor] = 1;
+            else
+                freqMap[neighbor]++;
+        std::string rc_pattern = reverseComplement(pattern);
+        std::set<std::string> rc_neighbors = dNeighbors(rc_pattern, d);
+        for (auto& rc_neighbor : rc_neighbors)
+            if (freqMap.find(rc_neighbor) == freqMap.end())
+                freqMap[rc_neighbor] = 1;
+            else
+                freqMap[rc_neighbor]++;
     }
     int max = maxMap(freqMap);
     for (auto& [key, val] : freqMap)
