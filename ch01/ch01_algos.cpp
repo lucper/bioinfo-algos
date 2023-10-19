@@ -30,7 +30,7 @@ std::unordered_set<std::string> frequentWords(const std::string& text, int k) {
 }
 
 std::unordered_map<std::string, int> frequencyTable(const std::string& text, int k) {
-    std::unordered_map<std::string, int> freqMap;
+    std::unordered_map<std::string, int> freqMap{};
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
         freqMap[pattern]++;
@@ -140,7 +140,7 @@ std::unordered_set<std::string> dNeighbors(const std::string& pattern, int d) {
 }
 
 std::forward_list<std::string> frequentWordsWithMismatches(const std::string& text, int k, int d) {
-    std::unordered_map<std::string, int> freqMap;
+    std::unordered_map<std::string, int> freqMap{};
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k);
@@ -155,7 +155,7 @@ std::forward_list<std::string> frequentWordsWithMismatches(const std::string& te
 }
 
 std::forward_list<std::string> frequentWordsWithMismatchesAndRC(const std::string& text, int k, int d) {
-    std::unordered_map<std::string, int> freqMap;
+    std::unordered_map<std::string, int> freqMap{};
     std::forward_list<std::string> patterns;
     for (int i = 0; i < text.length() - k + 1; ++i) {
         std::string pattern = text.substr(i, k), rc_pattern = reverseComplement(pattern);
