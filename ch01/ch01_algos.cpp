@@ -90,14 +90,14 @@ std::forward_list<int> patternMatch(const std::string& pattern, const std::strin
 
 std::set<std::string> findClumps(const std::string& genome, int k, int L, int t) {
     std::set<std::string> patterns;
-    for (int i = 0; i < genome.length() - L + 1; ++i) {
-        // dont compute the overlapping region again!
-        // add or update genome.substr(i + L - k, k)
-        std::string window = genome.substr(i, L);
-        std::unordered_map<std::string, int> freqMap = frequencyTable(window, k);
-        for (auto& [key, val] : freqMap)
-            if (val >= t)
-                patterns.insert(key);
+    std::unordered_map<std::string, int> freqMap = frequencyTable(genome.substr(0, L), k);
+    for (auto& [key, val] : freqMap)
+        if (val >= t)
+            patterns.insert(key);
+    for (int i = 1, j = L - k; i < genome.length() - L + 1; ++i, ++j) {
+        std::string first = genome.substr(i - 1, k), last = genome.substr(j, k);
+        if (--freqMap[first] >= t) patterns.insert(first);
+        if (++freqMap[last] >= t) patterns.insert(last);
     }
     return patterns;
 }
