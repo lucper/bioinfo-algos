@@ -94,8 +94,8 @@ std::set<std::string> findClumps(const std::string& genome, int k, int L, int t)
     for (auto& [key, val] : freqMap)
         if (val >= t)
             patterns.insert(key);
-    for (int i = 1, j = L - k; i < genome.length() - L + 1; ++i, ++j) {
-        std::string first = genome.substr(i - 1, k), last = genome.substr(j, k);
+    for (int i = 1; i < genome.length() - L + 1; ++i) {
+        std::string first = genome.substr(i - 1, k), last = genome.substr(i + L - k, k);
         if (--freqMap[first] >= t) patterns.insert(first);
         if (++freqMap[last] >= t) patterns.insert(last);
     }
