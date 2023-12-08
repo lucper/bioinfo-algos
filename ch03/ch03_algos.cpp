@@ -15,3 +15,15 @@ std::string pathToGenome(const std::vector<std::string>& path) {
         genome += path[i].substr(k - 1, 1);
     return genome;
 }
+
+std::unordered_map<std::string, std::forward_list<std::string>> overlapGraph(const std::vector<std::string>& kmers) {
+    std::unordered_map<std::string, std::forward_list<std::string>> adj_list{};
+    for (auto& k1 : kmers)
+        for (auto& k2 : kmers) {
+            auto suffix = k1.substr(1, k1.length()-1);
+            auto prefix = k2.substr(0, k2.length()-1);
+            if (suffix == prefix)
+                adj_list[k1].push_front(k2);
+        }
+    return adj_list;
+}
