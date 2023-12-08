@@ -16,18 +16,18 @@ std::string pathToGenome(const std::vector<std::string>& path) {
     return genome;
 }
 
-std::unordered_map<std::string, std::forward_list<std::string>> overlapGraph(const std::vector<std::string>& kmers) {
-    std::unordered_map<std::string, std::vector<std::string>> kmer_comp{};
-    for (auto& kmer : kmers)
-        kmer_comp[kmer] = kmerComposition(kmer, kmer.length()-1);
+std::unordered_map<std::string, std::vector<std::string>> overlapGraph(const std::vector<std::string>& kmers) {
+    std::unordered_map<std::string, std::set<std::string>> prefixes{};
+    for (auto& kmer : kmers) {
+        auto prefix = kmer.substr(0, kmer.length()-1);
+        prefixes[prefix].insert(kmer);
+    }
 
-    std::unordered_map<std::string, std::forward_list<std::string>> adj_list{};
-    for (auto& [kmer1, comp1] : kmer_comp) {
-        auto suffix = comp1.at(1);
-        for (auto& [kmer2, comp2] : kmer_comp) {
-            auto prefix = comp2.at(0);
-            if (suffix == prefix) adj_list[kmer1].push_front(kmer2);
-        }
+    std::unordered_map<std::string, std::vector<std::string>> adj_list{};
+    for (auto& kmer : kmers) {
+        auto suffix = kmer.substr(1, kmer.length()-1);
+        auto adjs = prefixes[suffix];
+        adj_list[kmer] = std::vector(adjs.begin(), adjs.end());
     }
 
     return adj_list;
