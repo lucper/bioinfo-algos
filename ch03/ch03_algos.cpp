@@ -17,13 +17,18 @@ std::string pathToGenome(const std::vector<std::string>& path) {
 }
 
 std::unordered_map<std::string, std::forward_list<std::string>> overlapGraph(const std::vector<std::string>& kmers) {
+    std::unordered_map<std::string, std::vector<std::string>> kmer_comp{};
+    for (auto& kmer : kmers)
+        kmer_comp[kmer] = kmerComposition(kmer, kmer.length()-1);
+
     std::unordered_map<std::string, std::forward_list<std::string>> adj_list{};
-    for (auto& k1 : kmers)
-        for (auto& k2 : kmers) {
-            auto suffix = k1.substr(1, k1.length()-1);
-            auto prefix = k2.substr(0, k2.length()-1);
-            if (suffix == prefix)
-                adj_list[k1].push_front(k2);
+    for (auto& [kmer1, comp1] : kmer_comp) {
+        auto suffix = comp1.at(1);
+        for (auto& [kmer2, comp2] : kmer_comp) {
+            auto prefix = comp2.at(0);
+            if (suffix == prefix) adj_list[kmer1].push_front(kmer2);
         }
+    }
+
     return adj_list;
 }
